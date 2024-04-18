@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>WAWAWA</title>
+    <style>
+        .a {
+            color: red;
+        }
+        .b {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+My Webshop!
+
+<div th:if="${user}" >
+    Hello, <span th:text="${user.name}" />!
+
+    You have <span th:text="${messageCount}" /> messages.
+</div>
+<span th:unless="${user}" >Not logged in</span>
+
+
+<ul>
+    <li th:each="item : ${items}">
+        <b th:text="${item.id()}" th:class="${item.id() % 2 == 0 ? 'a' : 'b'}"/>
+        <span th:text="${item.name()}"></span>
+    </li>
+</ul>
+
+<form>
+    <input/>
+</form>
+
+</body>
+</html>
