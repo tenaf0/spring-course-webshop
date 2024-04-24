@@ -8,27 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<script>
-    function menuToggle() {
-        const burgerButton = document.getElementById('burger-button');
-        const navMenu = document.getElementById('nav-menu');
 
-        if (burgerButton.classList.contains('is-active')) {
-            burgerButton.classList.remove('is-active');
-            navMenu.classList.remove('is-active');
-        } else {
-            burgerButton.classList.add('is-active');
-            navMenu.classList.add('is-active');
-        }
-    }
-</script>
 <nav class="navbar">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
             <i class="fa-solid fa-house title"></i>
         </a>
         <a role="button" id="burger-button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
-            onclick="menuToggle()"
+           onclick="menuToggle()"
         >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -49,14 +36,10 @@
     </div>
 </nav>
 <section class="section">
-    <div class="grid container">
-        <div th:each="item : ${items}" class="cell has-background-dark m-2 p-3 has-radius-small">
-            <div class="image is-128x128"></div>
-            <h1 class="title is-size-4">
-                <a th:href="${'/item/' + item.id()}" th:text="${item.name()}"></a>
-            </h1>
-            <div class="subtitle">$<span th:text="${item.price()}"></span></div>
-        </div>
+    <div class="container">
+        <div class="image"></div>
+        <h1 class="title" th:text="${id}"></h1>
+        <button class="button is-primary">Add to Cart</button>
     </div>
 </section>
 </body>
