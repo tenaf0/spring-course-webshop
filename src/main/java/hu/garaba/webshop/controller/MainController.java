@@ -5,10 +5,7 @@ import hu.garaba.webshop.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -35,11 +32,39 @@ public class MainController {
         return "itemView";
     }
 
-    @PostMapping("/")
+    @PostMapping("/insertItem")
     public String insertItem(@RequestParam String name, @RequestParam BigDecimal price, Model model) {
-        model.addAttribute("name", name);
+        // int == 2^32
+        // Integer == BOXED
+        /*
+        class Integer {
+            public final int value;
 
-        databaseService.insertItem(new Item(-1, name, price));
+            public Integer(int val) {
+                this.value = val;
+            }
+        }
+
+        Integer x = new Integer(3)
+        Integer y = null
+        x.val;
+
+        List<Integer> list = new ArrayList<>();
+        list.add(3); // type = int
+                -> list.add(new Integer(3)); // auto-boxing auto-unboxing
+        int x = list.get(0);
+                -> list.get(0).val;
+
+         +-128
+         */
+
+        // name=tablet&price=13241.2
+
+        Item item = new Item();
+        item.setName(name);
+        item.setPrice(price);
+
+        databaseService.insertItem(item);
 
         return "itemInsertSuccess";
     }

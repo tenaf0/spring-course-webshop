@@ -53,11 +53,24 @@
         <div th:each="item : ${items}" class="cell has-background-dark m-2 p-3 has-radius-small">
             <div class="image is-128x128"></div>
             <h1 class="title is-size-4">
-                <a th:href="${'/item/' + item.id()}" th:text="${item.name()}"></a>
+                <a th:href="${'/item/' + item.id}" th:text="${item.name}"></a>
             </h1>
-            <div class="subtitle">$<span th:text="${item.price()}"></span></div>
+            <div class="subtitle">$<span th:text="${item.price}"></span></div>
         </div>
     </div>
+
+    <form method="post" action="/insertItem" >
+        <input type="text" name="name">
+        <input type="text" name="price">
+        <input type="submit">
+    </form>
+
+   <!-- <form method="post" action="#" th:action="@{/insertItem}" th:object="${item}">
+        <input type="text" th:field="*{id}">
+        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{price}">
+        <input type="submit">
+    </form>-->
 </section>
 </body>
 </html>
