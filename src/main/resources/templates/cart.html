@@ -12,15 +12,13 @@
 <div th:replace="~{fragments/navbar.html :: navbar}"></div>
 
 <section class="section">
-    <div class="container">
-        <div class="image"></div>
-        <h1 class="title" th:text="${item.name}"></h1>
-        <div th:text="${item.price}"></div>
-        <div th:text="${item.description}"></div>
-        <form action="/cart" method="post">
-            <input type="hidden" name="id" th:value="${item.id}">
-            <input type="submit" class="button is-primary" value="Add to Cart"/>
-        </form>
+    <h1 class="title">Cart</h1>
+
+    <div th:if="${items.isEmpty()}">
+        Your cart is empty
+    </div>
+    <div class="container" th:each="item : ${items}">
+        <h2 class="title" th:text="${item.name}"></h2>
     </div>
 </section>
 </body>

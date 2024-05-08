@@ -7,13 +7,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -91,5 +84,19 @@ public class DatabaseService {
     @Transactional
     public void insertItem(Item item) {
         em.persist(item);
+    }
+
+    public Item fetchItemById(int id) {
+        Item item = em.find(Item.class, id);
+        return item;
+    }
+
+    public List<Item> searchItems(String searchTerm) {
+        Query query = em.createQuery("SELECT i FROM Item i WHERE lower(i.name) LIKE lower(CONCAT('%', :searchTerm, '%')) " +
+                "OR lower(i.description) LIKE lower(CONCAT('%', :searchTerm, '%'))");
+        query.setParameter("searchTerm", searchTerm);
+        List<Item> resultList = query.getResultList();
+
+        return resultList;
     }
 }

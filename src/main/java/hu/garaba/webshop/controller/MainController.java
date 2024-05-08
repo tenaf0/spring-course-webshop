@@ -1,20 +1,25 @@
 package hu.garaba.webshop.controller;
 
 import hu.garaba.webshop.entity.Item;
+import hu.garaba.webshop.service.CartService;
 import hu.garaba.webshop.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class MainController {
+    private final CartService cartService;
     private final DatabaseService databaseService;
 
     @Autowired
-    public MainController(DatabaseService databaseService) {
+    public MainController(CartService cartService, DatabaseService databaseService) {
+        this.cartService = cartService;
         this.databaseService = databaseService;
     }
 
@@ -27,7 +32,7 @@ public class MainController {
 
     @GetMapping("/item/{id}")
     public String itemView(@PathVariable int id, Model model) {
-        model.addAttribute("id", id);
+        model.addAttribute("item", databaseService.fetchItemById(id));
 
         return "itemView";
     }
@@ -67,5 +72,29 @@ public class MainController {
         databaseService.insertItem(item);
 
         return "itemInsertSuccess";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(required = false) String q, Model model) {
+        List<Item> items = databaseService.searchItems(q);
+        model.addAttribute("searchTerm", q);
+        model.addAttribute("searchResults", items);
+
+        return "searchResult";
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        model.addAttribute("items", cartService.getItems());
+
+        return "cart";
+    }
+
+    @PostMapping("/cart")
+    public RedirectView addItemToCart(@RequestParam int id, Model model) {
+        cartService.addItem(id);
+
+        // Also works as returning this string: "redirect:/cart"
+        return new RedirectView("cart");
     }
 }

@@ -1,0 +1,51 @@
+<div th:fragment="navbar">
+    <script>
+        function menuToggle() {
+            const burgerButton = document.getElementById('burger-button');
+            const navMenu = document.getElementById('nav-menu');
+
+            if (burgerButton.classList.contains('is-active')) {
+                burgerButton.classList.remove('is-active');
+                navMenu.classList.remove('is-active');
+            } else {
+                burgerButton.classList.add('is-active');
+                navMenu.classList.add('is-active');
+            }
+        }
+    </script>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <i class="fa-solid fa-house title"></i>
+            </a>
+            <a role="button" id="burger-button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample"
+               onclick="menuToggle()"
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="nav-menu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item">Oldal1</a>
+                <a class="navbar-item">Oldal2</a>
+                <a class="navbar-item">Oldal3</a>
+            </div>
+            <div class="navbar-end">
+                <a class="navbar-item" href="/cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <section>
+        <div class="container">
+            <form action="/search" method="get">
+                <input class="input is-large" type="text" name="q" placeholder="Search"/>
+            </form>
+        </div>
+    </section>
+</div>

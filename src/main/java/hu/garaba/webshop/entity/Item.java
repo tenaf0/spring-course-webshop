@@ -29,6 +29,8 @@ public class Item {
     @Column(name = "price")
     private BigDecimal price;
 
+    private String description;
+
     /////////// GETTERS/SETTERS
 
 
@@ -54,5 +56,13 @@ public class Item {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
