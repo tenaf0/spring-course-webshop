@@ -18,8 +18,10 @@
         Your cart is empty
     </div>
     <div class="container" th:each="item : ${items}">
-        <h2 class="title" th:text="${item.name}"></h2>
+        <h2 class="title" th:text="${item.key.name}"></h2>
+        <span th:text="${item.value}"></span>
     </div>
+    <h2 class="title">Sum: $<span th:text="${sum}"></span></h2>
 </section>
 </body>
 </html>

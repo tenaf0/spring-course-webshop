@@ -3,6 +3,7 @@ package hu.garaba.webshop.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 // Getter/setter = property
 // POJO = Plain Old Java Object
@@ -64,5 +65,18 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(price, item.price) && Objects.equals(description, item.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, description);
     }
 }

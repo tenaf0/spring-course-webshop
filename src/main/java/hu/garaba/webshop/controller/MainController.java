@@ -86,6 +86,7 @@ public class MainController {
     @GetMapping("/cart")
     public String cart(Model model) {
         model.addAttribute("items", cartService.getItems());
+        model.addAttribute("sum", cartService.getSum());
 
         return "cart";
     }
