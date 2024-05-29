@@ -7,12 +7,16 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @SessionScope
 public class CartService {
     private final DatabaseService databaseService;
-    private Map<Item, Integer> items = new HashMap<>();
+    /**
+     * A map of items that are added to the cart, where the keys are their ids and the value is the number of them
+     */
+    private Map<Integer, Integer> items = new HashMap<>();
 
     @Autowired
     public CartService(DatabaseService databaseService) {
@@ -20,7 +24,16 @@ public class CartService {
     }
 
     public Map<Item, Integer> getItems() {
-        return items;
+        // Map<int, int> -> Map<Item, int>
+
+        // Map.Pair(2 /*fogkefe*/, 3), Map.Pair(2 /*fogkefe*/, 3), Map.Pair(2 /*fogkefe*/, 3)
+        return items.entrySet().stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> databaseService.fetchItemById(e.getKey()),
+                                e -> e.getValue()
+                        )
+                );
     }
 
     public BigDecimal getSum() {
@@ -28,14 +41,13 @@ public class CartService {
         // Stream<Entry<Item,Integer>> -> Stream<BigDecimal> -> BigDecimal
         // [..[3],4,5,7,3,[9]..]
 
-        return items.entrySet().stream()          // FUNCTIONAL PROGRAMMING
+        return getItems().entrySet().stream()          // FUNCTIONAL PROGRAMMING
                 .map(entry -> entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())))
                 .reduce(BigDecimal.ZERO, (a, b) -> a.add(b));
     }
 
     public void addItem(int id) {
-        Item item = databaseService.fetchItemById(id);
-        items.compute(item,  (k, v) -> {
+        items.compute(id,  (k, v) -> {
             if (v == null) {
                 return 1;
             } else {

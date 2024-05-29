@@ -1,5 +1,6 @@
 package hu.garaba.webshop.service;
 
+import hu.garaba.webshop.entity.Category;
 import hu.garaba.webshop.entity.Item;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -57,6 +58,13 @@ public class DatabaseService {
     public List<Item> fetchItems() {
         Query query = em.createQuery("SELECT i FROM Item i");
         List<Item> resultList = query.getResultList();
+
+        return resultList;
+    }
+
+    public List<Category> fetchCategories() {
+        Query query = em.createQuery("SELECT c FROM Category c");
+        List<Category> resultList = query.getResultList();
 
         return resultList;
     }

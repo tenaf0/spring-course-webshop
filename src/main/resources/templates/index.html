@@ -11,6 +11,10 @@
 <div th:replace="~{fragments/navbar.html :: navbar}"></div>
 
 <section class="section">
+    <div class="columns">
+        <div class="column" th:each="category : ${categories}" th:text="${category.name}"></div>
+    </div>
+
     <div class="grid container">
         <div th:each="item : ${items}" class="cell has-background-dark m-2 p-3 has-radius-small">
             <div class="image is-128x128"></div>
