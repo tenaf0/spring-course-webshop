@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spring Webshop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<div th:replace="~{/fragments/navbar.html :: navbar}"></div>
+
+<section class="section">
+    <div class="container">
+        <h2 class="title">Your cart</h2>
+        <div th:each="item : ${items}" th:text="${item.key.name + ' ' + item.value}"></div>
+        <div>Sum: <span th:text="${'$' + sum}"></span></div>
+
+        <h2 class="title">Your data</h2>
+        <form method="post" action="/order/new">
+            <p th:if="${formError}" class="help is-danger">Your name and address can't be empty!</p>
+
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input th:class="${'input ' + (formError != null && formError ? 'is-danger' : '')}" type="text" placeholder="Your name" name="name">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Address</label>
+                <div class="control">
+                    <input th:class="${'input ' + (formError != null && formError ? 'is-danger' : '')}" type="text" placeholder="Your address" name="address">
+                </div>
+            </div>
+            <input type="submit" value="Buy now!" class="button is-primary" />
+        </form>
+    </div>
+</section>
+</body>
+</html>

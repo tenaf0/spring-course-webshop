@@ -8,21 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+<div th:replace="~{/fragments/navbar.html :: navbar}"></div>
 
 <section class="section">
-    <h1 class="title">Cart</h1>
-
-    <div th:if="${items.isEmpty()}">
-        Your cart is empty
+    <div class="container">
+        <div class="cell has-background-dark m-2 p-3 has-radius-small">
+            <h1 class="title is-size-4" th:text="${'#' + order.id}"></h1>
+            Name: <span th:text="${order.name}"></span><br />
+            Address: <span th:text="${order.address}"></span>
+            <div class="container">
+                <div th:each="orderItem : ${order.orderItems}" th:text="${orderItem.item.name + ' ' + orderItem.number + ' piece(s) $' + orderItem.unitPrice}"></div>
+            </div>
+        </div>
     </div>
-    <div class="container" th:each="item : ${items}">
-        <h2 class="title" th:text="${item.key.name}"></h2>
-        <span th:text="${item.value}"></span>
-    </div>
-    <h2 class="title">Sum: $<span th:text="${sum}"></span></h2>
-    <a href="order/new" class="button is-primary">Buy</a>
 </section>
 </body>
 </html>
